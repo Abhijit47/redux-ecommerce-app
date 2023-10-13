@@ -99,11 +99,13 @@ function Cart() {
   // make payment
   const handleMakePayment = async (products) => {
     try {
-      const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+      const stripe = await loadStripe(
+        `${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`
+      );
 
-      const API_URI = process.env.REACT_APP_PAYMENT_LINK;
+      const API_URI = `${process.env.REACT_APP_PAYMENT_LINK}`;
 
-      const response = await axios.post(API_URI, products);
+      const response = await axios.post(`${API_URI}`, products);
       const session = response.data.data.session;
       console.log(session);
 
