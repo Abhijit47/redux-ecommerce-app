@@ -366,11 +366,19 @@ function Cart() {
                           }).format(totalPrice)}
                         </p>
                       </div>
-                      <button
-                        onClick={() => handleMakePayment(carts)}
-                        className='text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white hover:bg-gray-900 transition-all delay-75 duration-100'>
-                        Checkout
-                      </button>
+                      {carts.length <= 0 ? (
+                        <button
+                          onClick={() => setShow(!show)}
+                          className='text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white hover:bg-gray-900 transition-all delay-75 duration-100'>
+                          No Item for Checkout
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleMakePayment(carts)}
+                          className='text-base leading-none w-full py-5 bg-gray-800 border-gray-800 border focus:outline-none rounded-md focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 text-white hover:bg-gray-900 transition-all delay-75 duration-100'>
+                          Checkout
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
