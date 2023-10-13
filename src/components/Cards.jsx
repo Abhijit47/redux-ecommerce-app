@@ -63,21 +63,30 @@ const Cards = () => {
                 <img
                   src={card.thumbnail}
                   alt={card.brand}
-                  className='rounded-md shadow-md h-full w-full'
+                  className='rounded-md shadow-md h-full w-full hover:scale-110 transition-all delay-200 duration-200'
                 />
               </div>
               <h5 className='font-sans font-semibold text-2xl capitalize text-center'>
                 {card.title.substr(0, 20)}
               </h5>
               <div className='flex flex-wrap gap-2 justify-center'>
-                <span className='card-badge'>₹&nbsp;{card.price * 100}</span>
-                <span className='card-badge'>⭐&nbsp;{card.rating}</span>
+                <span className='card-badge'>
+                  ₹&nbsp;
+                  {new Intl.NumberFormat('en-IN', {
+                    maximumSignificantDigits: 3,
+                  }).format(card.price * 100)}
+                </span>
+                <span className='card-badge'>
+                  ⭐&nbsp;{card.rating.toFixed(1)}
+                </span>
                 <span className='card-badge'>{card.brand}</span>
               </div>
               <div>
                 <p className='capitalize text-xs'>description</p>
                 <h5 className='text-md font-sans'>
-                  {card.description.substr(0, 30)}
+                  {card.description.length > 20
+                    ? `${card.description.substr(0, 30)} ...`
+                    : card.description}
                 </h5>
               </div>
               <div>

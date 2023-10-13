@@ -71,7 +71,7 @@ const Navbar = () => {
           <Link to='/' className='-m-1.5 p-1.5'>
             <span className='sr-only'>Your Company</span>
             <img
-              className='h-8 w-auto'
+              className='h-8 w-auto rounded-md'
               src='https://www.pngkit.com/png/detail/364-3642224_clarity-ecommerce-logo-logo-e-commerce-png.png'
               alt='hero-logo'
             />
