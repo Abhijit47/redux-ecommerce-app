@@ -9,6 +9,13 @@ import {
 import { toast } from 'react-hot-toast';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
+import {
+  BagIcon,
+  CircleMinus,
+  CirclePlus,
+  EmptyCartIcon,
+  LeftChevronIcon,
+} from '../assets/icons';
 
 function Cart() {
   const [show, setShow] = useState(false);
@@ -19,6 +26,7 @@ function Cart() {
 
   const dispatch = useDispatch();
 
+  // function for handle increment
   const handleIncrement = (item) => {
     dispatch(addToCart(item));
     toast.success('Items added to your cart.', {
@@ -33,6 +41,7 @@ function Cart() {
     });
   };
 
+  // function for one item remove
   const handleRemoveCart = (itemId) => {
     dispatch(removeToCart(itemId));
     toast.success('Item successfully removed from your cart.', {
@@ -47,6 +56,7 @@ function Cart() {
     });
   };
 
+  // function for handle decrement
   const handleDecrement = (item) => {
     dispatch(decrementCartItem(item));
     toast.error('Items remove to your cart.', {
@@ -61,6 +71,7 @@ function Cart() {
     });
   };
 
+  // function for handle empty cart
   const handleEmptyCart = () => {
     dispatch(emptyCartItems());
     toast.dismiss('All items successfully removed to your cart.', {
@@ -147,20 +158,7 @@ function Cart() {
                   <div
                     className='flex items-center text-gray-500 hover:text-gray-600 cursor-pointer'
                     onClick={() => setShow(!show)}>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='icon icon-tabler icon-tabler-chevron-left'
-                      width={16}
-                      height={16}
-                      viewBox='0 0 24 24'
-                      strokeWidth='1.5'
-                      stroke='currentColor'
-                      fill='none'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'>
-                      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
-                      <polyline points='15 6 9 12 15 18' />
-                    </svg>
+                    <LeftChevronIcon />
                     <p className='text-sm pl-2 leading-none'>Back</p>
                   </div>
                   <div className='flex justify-between items-center p-4'>
@@ -172,17 +170,7 @@ function Cart() {
                         <button
                           className='flex gap-2 items-center bg-red-500 hover:bg-red-600 rounded-md px-3 py-1 text-slate-50'
                           onClick={handleEmptyCart}>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            viewBox='0 0 24 24'
-                            fill='currentColor'
-                            className='w-4 h-4 text-slate-50'>
-                            <path
-                              fillRule='evenodd'
-                              d='M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.07a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 013.369 0c1.603.051 2.815 1.387 2.815 2.951zm-6.136-1.452a51.196 51.196 0 013.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 00-6 0v-.113c0-.794.609-1.428 1.364-1.452zm-.355 5.945a.75.75 0 10-1.5.058l.347 9a.75.75 0 101.499-.058l-.346-9zm5.48.058a.75.75 0 10-1.498-.058l-.347 9a.75.75 0 001.5.058l.345-9z'
-                              clipRule='evenodd'
-                            />
-                          </svg>
+                          <EmptyCartIcon />
                           <span>Empty cart</span>
                         </button>
                       </div>
@@ -190,17 +178,7 @@ function Cart() {
                   </div>
                   {carts.length <= 0 ? (
                     <div className='flex flex-col mt-14 justify-center items-center'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 24 24'
-                        fill='currentColor'
-                        className='w-12 h-12 text-slate-800'>
-                        <path
-                          fillRule='evenodd'
-                          d='M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 004.25 22.5h15.5a1.875 1.875 0 001.865-2.071l-1.263-12a1.875 1.875 0 00-1.865-1.679H16.5V6a4.5 4.5 0 10-9 0zM12 3a3 3 0 00-3 3v.75h6V6a3 3 0 00-3-3zm-3 8.25a3 3 0 106 0v-.75a.75.75 0 011.5 0v.75a4.5 4.5 0 11-9 0v-.75a.75.75 0 011.5 0v.75z'
-                          clipRule='evenodd'
-                        />
-                      </svg>
+                      <BagIcon />
                       <h3 className='text-3xl'>Your cart is empty!</h3>
                     </div>
                   ) : (
@@ -232,19 +210,7 @@ function Cart() {
                                       ? () => handleRemoveCart(cartItem.id)
                                       : () => handleDecrement(cartItem)
                                   }>
-                                  <svg
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    fill='none'
-                                    viewBox='0 0 24 24'
-                                    strokeWidth={1.5}
-                                    stroke='currentColor'
-                                    className='w-6 h-6'>
-                                    <path
-                                      strokeLinecap='round'
-                                      strokeLinejoin='round'
-                                      d='M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z'
-                                    />
-                                  </svg>
+                                  <CircleMinus />
                                 </button>
                                 <div className='w-2/12'>
                                   <input
@@ -258,19 +224,7 @@ function Cart() {
                                 <button
                                   className='px-3 py-1'
                                   onClick={() => handleIncrement(cartItem)}>
-                                  <svg
-                                    xmlns='http://www.w3.org/2000/svg'
-                                    fill='none'
-                                    viewBox='0 0 24 24'
-                                    strokeWidth='1.5'
-                                    stroke='currentColor'
-                                    className='w-6 h-6'>
-                                    <path
-                                      strokeLinecap='round'
-                                      strokeLinejoin='round'
-                                      d='M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z'
-                                    />
-                                  </svg>
+                                  <CirclePlus />
                                 </button>
                               </div>
                             </div>

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../redux/features/cartSlice';
 import { toast } from 'react-hot-toast';
 import { ProgressBar } from 'react-loader-spinner';
+import { getAllProducts } from '../redux/actions/productAction';
 
 const Cards = () => {
   const [cardData, setCardData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { products, isLoading, isError } = useSelector(
+    (state) => state.products
+  );
 
   const dispatch = useDispatch();
 
@@ -26,26 +29,27 @@ const Cards = () => {
   };
 
   useEffect(() => {
-    const getAllCardData = async () => {
-      setIsLoading(true);
-      const response = await axios.get('https://dummyjson.com/products');
-      setCardData(response.data.products);
-      setIsLoading(false);
-    };
-
-    getAllCardData();
-  }, []);
+    if (products?.length === 0) {
+      dispatch(getAllProducts());
+    }
+    setCardData(products);
+  }, [dispatch, products]);
 
   return (
     <section className='container mx-auto py-8'>
       <h3 className='text-center text-3xl font-sans font-semibold mb-6'>
         Products
       </h3>
+      {isError && (
+        <h1 className='text-center text-red-600 text-2xl'>
+          Something went wrong try again!!!
+        </h1>
+      )}
       {isLoading ? (
         <div className='h-full flex justify-center items-center'>
           <ProgressBar
             height='80'
-            width='400'
+            width='800'
             ariaLabel='progress-bar-loading'
             wrapperStyle={{}}
             wrapperClass='progress-bar-wrapper'
