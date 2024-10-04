@@ -7,5 +7,5 @@ export const store = configureStore({
     products: productSlice,
     carts: cartSlice,
   },
-  devTools: process.env.NODE_ENV !== 'development',
+  devTools: process.env.NODE_ENV === 'development',
 });
